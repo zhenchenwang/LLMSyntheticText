@@ -1,0 +1,6 @@
+Patient Name: John Appleseed
+Device: A-Fib Pacemaker Model 7
+Report Date: 2023-10-26
+Location: Mayo Clinic, Rochester
+
+The patient reported experiencing dizzy spells and a rapid heartbeat approximately two weeks after the device was implanted. An ECG confirmed atrial fibrillation. The device was interrogated and found to be functioning within normal parameters, but the patient's symptoms persist. Dr. Susan Smith is monitoring the situation.

@@ -1,0 +1,25 @@
+--- Privacy Evaluation Summary ---
+Original file: demo/report_for_testing.txt
+Synthetic file: demo/synthetic_report_for_testing.txt
+----------------------------------
+
+--- 1. PII Leakage Analysis ---
+Analyzing original text for PII...
+Found 4 PII entities in the original document.
+[+] No PII from the original document was found in the synthetic document.
+--------------------
+
+--- 2. Text Similarity Analysis ---
+Cosine Similarity Score: 0.2845
+[+] Low similarity. The synthetic report is significantly different from the original.
+--------------------
+
+--- 3. Lexical Similarity (ROUGE-L) ---
+ROUGE-L F-measure: 0.2362
+[+] Low lexical similarity. The text is likely original.
+--------------------
+
+--- 4. Semantic Similarity (Sentence-BERT) ---
+Semantic Similarity Score: 0.5431
+[~] Moderate semantic similarity. The reports share similar meaning.
+--------------------

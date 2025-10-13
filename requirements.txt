@@ -1,9 +1,6 @@
-transformers
-peft
-accelerate
-opacus
-torch
-datasets
-bitsandbytes
-scipy
 requests
+presidio-analyzer
+scikit-learn
+spacy
+rouge-score
+sentence-transformers
