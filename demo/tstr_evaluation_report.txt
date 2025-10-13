@@ -1,0 +1,17 @@
+Loading datasets...
+Real training samples: 4
+Synthetic training samples: 4
+Real test samples: 2
+
+Training models...
+Training complete.
+
+Evaluating models on the real test set...
+
+--- TSTR Evaluation Results ---
+F1 Score (Real Data Model):   1.0000
+F1 Score (Synthetic Data Model): 1.0000
+---------------------------------
+
+Performance Gap (Difference in F1 scores): 0.0000
+Conclusion: Excellent utility. The synthetic data is a strong substitute for real data.

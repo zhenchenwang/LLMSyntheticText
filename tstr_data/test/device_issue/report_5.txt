@@ -1,0 +1,1 @@
+The patient's defibrillator, a Boston Scientific Model S-ICD, issued an inappropriate shock during mild exercise. The patient, Michael Brown, reported significant pain and distress. Analysis of the device logs by Dr. Garcia at Oceanfront Medical indicated that the shock was triggered by T-wave oversensing. A reprogramming of the device is scheduled.

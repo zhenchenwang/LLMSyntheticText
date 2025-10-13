@@ -1,0 +1,9 @@
+**Patient:** A 68-year-old male.
+
+**Device:** A-Fib Pacemaker, Model 8.
+
+**Implantation Date:** 2023-10-12.
+
+**Follow-up Date:** 2023-10-26.
+
+**Report:** The patient presented with complaints of lightheadedness and palpitations that began approximately one week ago. A 12-lead ECG revealed atrial fibrillation with a rapid ventricular response. The pacemaker was interrogated, and all parameters were within the programmed limits. The patient's symptoms have not resolved with medication adjustments. Dr. Emily White is now managing the case and is considering a cardioversion. The patient is scheduled for a follow-up appointment in one week.
