@@ -1,0 +1,1 @@
+The device's battery was found to be depleted unexpectedly. The patient, Jane Doe, noticed the low battery indicator during a routine check. The device is a MedPace Model X, implanted on 2022-01-15. Dr. Adams at City General Hospital has scheduled a replacement procedure. No adverse patient symptoms were reported.

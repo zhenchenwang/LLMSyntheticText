@@ -6,6 +6,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from rouge_score import rouge_scorer
 from sentence_transformers import SentenceTransformer, util
+import nltk
+from nltk.tokenize import word_tokenize, sent_tokenize
+from collections import Counter
 
 def read_file_content(filepath):
     """
@@ -56,6 +59,55 @@ def analyze_pii_leakage(original_text, synthetic_text):
     else:
         report_lines.extend(leaked_items)
         report_lines.append(f"\nSummary: Found {leaked_pii_count} leaked PII entities.")
+
+    report_lines.append("-" * 20)
+    return "\n".join(report_lines)
+
+
+def analyze_statistical_fidelity(original_text, synthetic_text):
+    """
+    Analyzes and compares the statistical properties of the two texts.
+    """
+    report_lines = ["\n--- 5. Statistical Fidelity Analysis ---"]
+
+    try:
+        # Download NLTK data if not present
+        try:
+            nltk.data.find('tokenizers/punkt')
+        except nltk.downloader.DownloadError:
+            report_lines.append("Downloading NLTK 'punkt' model...")
+            nltk.download('punkt', quiet=True)
+
+        # Tokenize texts
+        original_words = word_tokenize(original_text.lower())
+        synthetic_words = word_tokenize(synthetic_text.lower())
+        original_sents = sent_tokenize(original_text)
+        synthetic_sents = sent_tokenize(synthetic_text)
+
+        # 1. Text Length Comparison
+        report_lines.append("a) Text Length:")
+        report_lines.append(f"  - Word Count: Original={len(original_words)} vs. Synthetic={len(synthetic_words)}")
+        report_lines.append(f"  - Sentence Count: Original={len(original_sents)} vs. Synthetic={len(synthetic_sents)}")
+
+        # 2. Vocabulary Richness (Type-Token Ratio)
+        ttr_original = len(set(original_words)) / len(original_words) if len(original_words) > 0 else 0
+        ttr_synthetic = len(set(synthetic_words)) / len(synthetic_words) if len(synthetic_words) > 0 else 0
+        report_lines.append("\nb) Vocabulary Richness (Type-Token Ratio):")
+        report_lines.append(f"  - Original: {ttr_original:.4f}")
+        report_lines.append(f"  - Synthetic: {ttr_synthetic:.4f}")
+
+        # 3. Word Frequency Distribution (Top 20 words)
+        report_lines.append("\nc) Top 20 Word Frequency Comparison:")
+        original_counts = Counter(original_words)
+        synthetic_counts = Counter(synthetic_words)
+        report_lines.append(f"  {'Word':<15} | {'Original Freq':<15} | {'Synthetic Freq':<15}")
+        report_lines.append(f"  {'-'*15} | {'-'*15} | {'-'*15}")
+        for word, count in original_counts.most_common(20):
+            synth_freq = synthetic_counts.get(word, 0)
+            report_lines.append(f"  {word:<15} | {count:<15} | {synth_freq:<15}")
+
+    except Exception as e:
+        report_lines.append(f"Error during statistical fidelity analysis: {e}")
 
     report_lines.append("-" * 20)
     return "\n".join(report_lines)
@@ -206,8 +258,9 @@ def main():
     text_sim_report = analyze_text_similarity(original_text, synthetic_text)
     lex_sim_report = analyze_lexical_similarity(original_text, synthetic_text)
     sem_sim_report = analyze_semantic_similarity(original_text, synthetic_text)
+    stat_report = analyze_statistical_fidelity(original_text, synthetic_text)
 
-    full_report = "\n".join(report_header) + "\n".join([pii_report, text_sim_report, lex_sim_report, sem_sim_report])
+    full_report = "\n".join(report_header) + "\n".join([pii_report, text_sim_report, lex_sim_report, sem_sim_report, stat_report])
 
     # Print the report to the console
     print(full_report)
