@@ -1,22 +1,22 @@
-# Synthetic Medical Data Generation and Evaluation Toolkit
+# Synthetic Free-Text Medical Data Generation and Evaluation Toolkit
 
 ## 1. Project Overview
 
-This project provides a complete toolkit for generating synthetic medical device adverse event reports and evaluating their quality across three key pillars: **Privacy & Novelty**, **Fidelity & Utility**, and **Fluency & Quality**.
+This project provides a complete toolkit for generating synthetic **free-text data**, specifically focusing on medical device adverse event reports. It evaluates the quality of this unstructured data across three key pillars: **Privacy & Novelty**, **Fidelity & Utility**, and **Fluency & Quality**.
 
-The primary goal is to create high-quality synthetic data that is statistically similar to real-world data but contains no personally identifiable information (PII), making it safe for research, development, and testing purposes.
+The primary goal is to create high-quality synthetic text that is statistically similar to real-world free-text data but contains no personally identifiable information (PII), making it safe for research, development, and testing purposes.
 
 This toolkit includes:
-*   A script to generate synthetic reports using a large language model (LLM) via an API.
-*   A comprehensive evaluation suite to measure the quality of the generated data.
-*   Example data and a "Train on Synthetic, Test on Real" (TSTR) simulation to demonstrate the utility of the synthetic data.
+*   A script to generate synthetic reports from real free-text examples using a large language model (LLM) via an API.
+*   A comprehensive evaluation suite to measure the quality of the generated text data.
+*   Example data and a "Train on Synthetic, Test on Real" (TSTR) simulation to demonstrate the utility of the synthetic data for downstream NLP tasks.
 
 ---
 
 ## 2. Core Concepts
 
-### What is Synthetic Data?
-Synthetic data is artificially generated data that is not based on real-world events. In this project, we use a Large Language Model (LLM) to read real medical reports and generate new, similar reports that are entirely fictional. This allows us to create large, realistic datasets without compromising the privacy of real individuals.
+### What is Synthetic Free-Text Data?
+Synthetic data is artificially generated data that is not based on real-world events. This project focuses on **synthetic free-text data**, which mimics the style, structure, and content of unstructured text like clinical notes, patient feedback, or adverse event reports. We use a Large Language Model (LLM) to read real reports and generate new, similar reports that are entirely fictional. This allows us to create large, realistic text datasets without compromising the privacy of real individuals.
 
 ### The Three Pillars of Synthetic Data Evaluation
 A robust evaluation of synthetic data quality rests on three key pillars:
