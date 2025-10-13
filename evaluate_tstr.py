@@ -45,18 +45,29 @@ def load_data_from_directory(directory):
                     labels.append(label)
     return shuffle(texts, labels, random_state=42)
 
+def save_tstr_report(report_content, output_path):
+    """Saves the TSTR evaluation report to a text file."""
+    try:
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(report_content)
+        print(f"\nTSTR evaluation report successfully saved to '{output_path}'")
+    except IOError as e:
+        print(f"\nError: Could not save TSTR report to '{output_path}'. Reason: {e}")
+
 def run_tstr_evaluation():
-    """Main function to run the TSTR evaluation."""
+    """Main function to run the TSTR evaluation and return a report string."""
+
+    report_lines = []
 
     # 1. Load Data
-    print("Loading datasets...")
+    report_lines.append("Loading datasets...")
     real_train_texts, real_train_labels = load_data_from_directory("tstr_data/real")
     synth_train_texts, synth_train_labels = load_data_from_directory("tstr_data/synthetic")
     real_test_texts, real_test_labels = load_data_from_directory("tstr_data/test")
 
-    print(f"Real training samples: {len(real_train_texts)}")
-    print(f"Synthetic training samples: {len(synth_train_texts)}")
-    print(f"Real test samples: {len(real_test_texts)}\n")
+    report_lines.append(f"Real training samples: {len(real_train_texts)}")
+    report_lines.append(f"Synthetic training samples: {len(synth_train_texts)}")
+    report_lines.append(f"Real test samples: {len(real_test_texts)}\n")
 
     # 2. Vectorize Data
     vectorizer = TfidfVectorizer(max_features=1000)
@@ -65,16 +76,16 @@ def run_tstr_evaluation():
     X_real_test = vectorizer.transform(real_test_texts)
 
     # 3. Train Models
-    print("Training models...")
+    report_lines.append("Training models...")
     model_real = LogisticRegression(random_state=42)
     model_real.fit(X_real_train, real_train_labels)
 
     model_synth = LogisticRegression(random_state=42)
     model_synth.fit(X_synth_train, synth_train_labels)
-    print("Training complete.\n")
+    report_lines.append("Training complete.\n")
 
     # 4. Evaluate Models
-    print("Evaluating models on the real test set...")
+    report_lines.append("Evaluating models on the real test set...")
     preds_real = model_real.predict(X_real_test)
     preds_synth = model_synth.predict(X_real_test)
 
@@ -82,21 +93,30 @@ def run_tstr_evaluation():
     f1_synth = f1_score(real_test_labels, preds_synth, pos_label='device_issue')
 
     # 5. Report Results
-    print("\n--- TSTR Evaluation Results ---")
-    print(f"F1 Score (Real Data Model):   {f1_real:.4f}")
-    print(f"F1 Score (Synthetic Data Model): {f1_synth:.4f}")
-    print("---------------------------------")
+    report_lines.append("\n--- TSTR Evaluation Results ---")
+    report_lines.append(f"F1 Score (Real Data Model):   {f1_real:.4f}")
+    report_lines.append(f"F1 Score (Synthetic Data Model): {f1_synth:.4f}")
+    report_lines.append("---------------------------------")
 
     performance_gap = abs(f1_real - f1_synth)
-    print(f"\nPerformance Gap (Difference in F1 scores): {performance_gap:.4f}")
+    report_lines.append(f"\nPerformance Gap (Difference in F1 scores): {performance_gap:.4f}")
 
     if performance_gap < 0.1:
-        print("Conclusion: Excellent utility. The synthetic data is a strong substitute for real data.")
+        report_lines.append("Conclusion: Excellent utility. The synthetic data is a strong substitute for real data.")
     elif performance_gap < 0.25:
-        print("Conclusion: Good utility. The synthetic data retains significant value.")
+        report_lines.append("Conclusion: Good utility. The synthetic data retains significant value.")
     else:
-        print("Conclusion: Limited utility. The synthetic data does not capture the real data's properties well.")
+        report_lines.append("Conclusion: Limited utility. The synthetic data does not capture the real data's properties well.")
+
+    return "\n".join(report_lines)
 
 
 if __name__ == "__main__":
-    run_tstr_evaluation()
+    report = run_tstr_evaluation()
+    print(report)
+
+    # Ensure the demo directory exists before saving
+    if not os.path.exists("demo"):
+        os.makedirs("demo")
+
+    save_tstr_report(report, "demo/tstr_evaluation_report.txt")
