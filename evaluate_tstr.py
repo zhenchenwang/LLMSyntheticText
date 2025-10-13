@@ -11,26 +11,12 @@ Methodology:
 6.  Evaluate both models on the 'real' test set.
 7.  Compare their F1-scores to determine the performance gap and, thus, the utility
     of the synthetic data.
+"""
 import os
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import f1_score
 from sklearn.utils import shuffle
-
-"""
-This script performs a 'Train on Synthetic, Test on Real' (TSTR) evaluation
-to measure the utility of the synthetic data.
-
-Methodology:
-1.  Load the 'real' and 'synthetic' training datasets from the 'tstr_data' directory.
-2.  Load the 'real' test dataset.
-3.  Vectorize the text data using TF-IDF.
-4.  Train a Logistic Regression classifier on the 'real' training data.
-5.  Train an identical Logistic Regression classifier on the 'synthetic' training data.
-6.  Evaluate both models on the 'real' test set.
-7.  Compare their F1-scores to determine the performance gap and, thus, the utility
-    of the synthetic data.
-"""
 
 def load_data_from_directory(directory):
     """Loads text files and their labels from subdirectories."""
